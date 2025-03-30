@@ -3,19 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.EditarProduto"
              Title="{Binding Descricao}">
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Salvar" Clicked="ToolbarItem_Clicked" />
     </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="10">
+            <Label Text="Descrição do Produto:" />
+            <Entry x:Name="txt_descricao" Text="{Binding Descricao}" />
 
-    <VerticalStackLayout Spacing="10" Padding="10">
-        <Label Text="Descrição do Produto:" />
-        <Entry x:Name="txt_descricao" Text="{Binding Descricao}" />
+            <Label Text="Quantidade:" />
+            <Entry x:Name="txt_quantidade" Text="{Binding Quantidade}" Keyboard="Numeric" />
 
-        <Label Text="Quantidade:" />
-        <Entry x:Name="txt_quantidade" Text="{Binding Quantidade}" Keyboard="Numeric" />
+            <Label Text="Preço Unitário:" />
+            <Entry x:Name="txt_preco" Text="{Binding Preco}" Keyboard="Numeric" />
 
-        <Label Text="Preço Unitário:" />
-        <Entry x:Name="txt_preco" Text="{Binding Preco}" Keyboard="Numeric" />
-    </VerticalStackLayout>
+            <Label Text="Categoria:" />
+            <Entry x:Name="txt_categoria" Text="{Binding Categoria}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

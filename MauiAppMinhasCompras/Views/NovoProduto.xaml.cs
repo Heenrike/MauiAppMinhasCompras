@@ -1,32 +1,62 @@
 using MauiAppMinhasCompras.Models;
+using System;
+using System.Collections.Generic;
+using Microsoft.Maui.Controls;
 
-namespace MauiAppMinhasCompras.Views;
-
-public partial class NovoProduto : ContentPage
+namespace MauiAppMinhasCompras.Views
 {
-    public NovoProduto()
+    public partial class NovoProduto : ContentPage
     {
-        InitializeComponent();
-    }
-
-    private async void ToolbarItem_Clicked(object sender, EventArgs e)
-    {
-        try
+        public List<string> Categorias { get; set; } = new List<string>
         {
-            Produto p = new Produto
+            "Alimentos",
+            "Bebidas",
+            "Limpeza",
+            "Higiene",
+            "Eletrônicos",
+            "Roupas",
+            "Outros"
+        };
+
+        public NovoProduto()
+        {
+            InitializeComponent();
+            BindingContext = this;
+        }
+
+        private async void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            try
             {
-                Descricao = txt_descricao.Text,
-                Quantidade = Convert.ToDouble(txt_quantidade.Text),
-                Preco = Convert.ToDouble(txt_preco.Text)
-            };
+                
+                if (string.IsNullOrWhiteSpace(txt_descricao.Text) ||
+                    !double.TryParse(txt_quantidade.Text, out double quantidade) ||
+                    !double.TryParse(txt_preco.Text, out double preco) ||
+                    pickerCategoria.SelectedItem == null)
+                {
+                    await DisplayAlert("Erro", "Preencha todos os campos corretamente", "OK");
+                    return;
+                }
 
-            await App.Db.Insert(p);
-            await DisplayAlert("Sucesso!", "Registro Inserido", "OK");
+                Produto p = new Produto
+                {
+                    Descricao = txt_descricao.Text,
+                    Quantidade = quantidade,
+                    Preco = preco,
+                    Categoria = pickerCategoria.SelectedItem.ToString()
+                };
 
+                await App.Db.Insert(p);
+                await DisplayAlert("Sucesso!", "Produto cadastrado", "OK");
+                await Navigation.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
         }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Ops", ex.Message, "OK");
-        }
+
+
     }
-}
+    }
+

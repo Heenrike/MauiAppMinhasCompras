@@ -3,19 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.NovoProduto"
              Title="Novo Produto">
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Salvar" Clicked="ToolbarItem_Clicked" />
     </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
+            <Label Text="Descrição do Produto:" />
+            <Entry x:Name="txt_descricao" Placeholder="Informe a descrição" />
 
-    <VerticalStackLayout Spacing="10" Padding="10">
-        <Label Text="Descrição do Produto:" />
-        <Entry x:Name="txt_descricao" />
+            <Label Text="Quantidade:" />
+            <Entry x:Name="txt_quantidade" Keyboard="Numeric" Placeholder="Informe a quantidade" />
 
-        <Label Text="Quantidade:" />
-        <Entry x:Name="txt_quantidade" Keyboard="Numeric" />
+            <Label Text="Preço Unitário:" />
+            <Entry x:Name="txt_preco" Keyboard="Numeric" Placeholder="Informe o preço" />
 
-        <Label Text="Preço Unitário:" />
-        <Entry x:Name="txt_preco" Keyboard="Numeric" />
-    </VerticalStackLayout>
+            <!-- Novo: Campo de Categoria -->
+            <Label Text="Categoria:" />
+            <Picker x:Name="pickerCategoria"
+        Title="Selecione uma categoria"
+        ItemsSource="{Binding Categorias}"
+        SelectedItem="{Binding Categoria}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

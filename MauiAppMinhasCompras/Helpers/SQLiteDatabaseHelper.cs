@@ -1,5 +1,7 @@
 ﻿using MauiAppMinhasCompras.Models;
 using SQLite;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MauiAppMinhasCompras.Helpers
 {
@@ -20,11 +22,8 @@ namespace MauiAppMinhasCompras.Helpers
 
         public Task<List<Produto>> Update(Produto p)
         {
-            string sql = "UPDATE Produto SET Descricao=?, Quantidade=?, Preco=? WHERE Id=?";
-
-            return _conn.QueryAsync<Produto>(
-                sql, p.Descricao, p.Quantidade, p.Preco, p.Id
-            );
+            string sql = "UPDATE Produto SET Descricao=?, Quantidade=?, Preco=?, Categoria=? WHERE Id=?";
+            return _conn.QueryAsync<Produto>(sql, p.Descricao, p.Quantidade, p.Preco, p.Categoria, p.Id);
         }
 
         public Task<int> Delete(int id)
@@ -39,9 +38,14 @@ namespace MauiAppMinhasCompras.Helpers
 
         public Task<List<Produto>> Search(string q)
         {
-            string sql = "SELECT * FROM Produto WHERE descricao LIKE '%" + q + "%'";
-
+            string sql = "SELECT * FROM Produto WHERE Descricao LIKE '%" + q + "%'";
             return _conn.QueryAsync<Produto>(sql);
+        }
+
+        public Task<List<Produto>> SearchByCategory(string categoria)
+        {
+            string sql = "SELECT * FROM Produto WHERE Categoria = ?";
+            return _conn.QueryAsync<Produto>(sql, categoria);
         }
     }
 }
